@@ -8,6 +8,7 @@ databse for a specific group text.
 
 import os
 import pwd
+import sqlite3
 
 import pandas as pd
 
@@ -38,3 +39,9 @@ def get_chat_identifier(group_name: str, connection: sqlite3.Connection) -> str:
     raise ValueError(f'There is more than one group for group name {group_name}')
 
   return chat_query['chat_identifier'][0]
+
+def get_texts_for_group(group_name):
+  connection = sqlite3.connect(get_path_to_imessage_database())
+  groupchat_id = get_chat_identifier(group_name, connection)
+  message_objects = pd.read_sql_query(f"SELECT * FROM message WHERE cache_roomnames = '{groupchat_id}' AND text IS NOT NULL", connection)
+  return [text_message for text_message in message_objects['text']]
