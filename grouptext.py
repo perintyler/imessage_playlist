@@ -9,6 +9,7 @@ databse for a specific group text.
 import os
 import pwd
 import sqlite3
+from argparse import ArgumentParser
 
 import pandas as pd
 
@@ -45,3 +46,10 @@ def get_texts_for_group(group_name):
   groupchat_id = get_chat_identifier(group_name, connection)
   message_objects = pd.read_sql_query(f"SELECT * FROM message WHERE cache_roomnames = '{groupchat_id}' AND text IS NOT NULL", connection)
   return [text_message for text_message in message_objects['text']]
+
+if __name__ == '__main__':
+  parser = ArgumentParser(description='Get all text messages for a iMessage group chat')
+  parser.add_argument('group_name', type=str)
+  args = parser.parse_args()
+
+  print(get_texts_for_group(args.group_name))
