@@ -20,12 +20,12 @@ load_dotenv()
 def get_track_links_from_grouptext(group_name):
   """
   """
-  spotify_links = []
+  spotify_links = set()
 
   for text_message in get_texts_for_group(group_name):
     for word in text_message.split(' '):
       if word.startswith('https://open.spotify.com/track'):
-        spotify_links.append(word)
+        spotify_links.add(word)
 
   return spotify_links
 
@@ -53,4 +53,4 @@ if __name__ == '__main__':
   parser.add_argument('--playlist', type=str)
   args = parser.parse_args()
 
-  print(create_playlist_from_grouptext(args.playlist, args.group))
+  create_playlist_from_grouptext(args.playlist, args.group)

@@ -51,6 +51,5 @@ def test_get_track_links_from_grouptext():
     'https://open.spotify.com/track/3DbBgbnDUOml329rAp2Tbr?si=de627e1538c242e7', 
     'https://open.spotify.com/track/1x0WbCpdSPdwVoTCdJ4pPZ?si=7721bb5c607f4d7e', 
     'https://open.spotify.com/track/5lw8Mgb4LyhriPIC86gV6e?si=cb9c17509a5e457a', 
-    'https://open.spotify.com/track/5lw8Mgb4LyhriPIC86gV6e?si=cb9c17509a5e457a', 
     'https://open.spotify.com/track/5xTtaWoae3wi06K5WfVUUH?si=gxXVvjBITqSvFIyu4mfR7A'
   ]
