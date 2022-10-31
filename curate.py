@@ -8,6 +8,7 @@ of track links.
 
 import os
 from argparse import ArgumentParser
+from typing import Set
 
 from .grouptext import get_texts_for_group
 
@@ -15,10 +16,14 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv() # used to keep spotify client id/secret private
 
-def get_track_links_from_grouptext(group_name):
+def get_track_links_from_grouptext(group_name: str) -> Set[str]:
   """
+  Finds and returns all spotify track links that appear anywhere 
+  in any text message found in a group chat.
+
+  - group_name: the display name of an iMessage group
   """
   spotify_links = set()
 
@@ -29,8 +34,15 @@ def get_track_links_from_grouptext(group_name):
 
   return spotify_links
 
-def create_playlist_from_grouptext(playlist_name, group_name):
+def create_playlist_from_grouptext(playlist_name: str, group_name: str):
   """
+  Creates a new spotify playlist, which will contain all songs shared in
+  an iMessage group. This function will trigger a spotify authorization 
+  workflow, allowing the user to log in to their spotify account in their 
+  browser.
+
+  - playlist_name: the name of the playlist to be created
+  - group_name: the display name of an iMessage group
   """
   track_links = get_track_links_from_grouptext(group_name)
 
