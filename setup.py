@@ -10,7 +10,6 @@ from setuptools import setup
 
 PACKAGE_NAME = 'imessage_playlist'
 
-
 with open('./requirements.txt') as f:
   requirements = f.read().splitlines()
 
