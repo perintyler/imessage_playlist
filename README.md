@@ -23,3 +23,19 @@ An osx user's iMessage history is stored in a SQLite database called `chat.db`. 
 
 Once this is done, `imessage_playlist` will be able query the local SQLite database.
 
+### Providing Spotify Client Credentials
+
+This package uses the Spotify API, which requires a client application. Unfortunately, in order to use `imessage_playlist`, you'll have to create your own client-application, since pushing my own client ID and secret. Once you've created your own spotify client application, create an `.env` file in the repo's root directory. Then, inside that file, define `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REDIRECT_URI`. 
+
+The `SPOTIFY_REDIRECT_URI` will need to be whitelisted by your spotify client application. To do so:
+1. navigate to the spotify developer dashboard
+2. click on your applications
+3. click the "edit settings" button
+4. scroll down to the "Redirect URIs" section
+5. enter your redirect URI in the prompt and select "add"
+
+__NOTE:__ For local applications, use a redirect uri within the `localhost` domain, such as `http://localhost:8888/callback`.
+
+For reference, use the `auth-template.env` enviroment file template, which is located in this repo's root directory.
+
+
