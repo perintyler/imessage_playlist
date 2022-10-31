@@ -17,7 +17,7 @@ __Requirements:__
 
 ### Installation
 
-The `imessage_playlist` package and all of its dependencies can be installed with pip:
+The `imessage_playlist` package and all of its dependencies can be installed with pip. Run this command from within the root repo directory:
 
 ```bash
 pip3 install .
@@ -36,7 +36,7 @@ Once this is done, `imessage_playlist` will be able query the local SQLite datab
 
 ### Providing Spotify Client Credentials
 
-This package uses the Spotify API, which requires a client application. Unfortunately, in order to use `imessage_playlist`, you'll have to create your own client-application, since pushing my own client ID and secret. Once you've created your own spotify client application, create an `.env` file in the repo's root directory. Then, inside that file, define `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REDIRECT_URI`. 
+This package uses the Spotify API, which requires a client application. Unfortunately, in order to use `imessage_playlist`, you'll have to create your own client-application (since pushing my own client ID/secret would be a security risk). Once you've created your own spotify client application, create an `.env` file in the repo's root directory. Then, inside that file, define `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REDIRECT_URI`. 
 
 The `SPOTIFY_REDIRECT_URI` will need to be whitelisted by your spotify client application. To do so:
 1. navigate to the spotify developer dashboard
