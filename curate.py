@@ -7,16 +7,13 @@ of track links.
 """
 
 import os
+from typing import Set, Dict
 from argparse import ArgumentParser
-from typing import Set
 
 from .grouptext import get_texts_for_group
 
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from dotenv import load_dotenv
-
-load_dotenv() # used to keep spotify client id/secret private
 
 def get_track_links_from_grouptext(group_name: str) -> Set[str]:
   """
@@ -34,7 +31,7 @@ def get_track_links_from_grouptext(group_name: str) -> Set[str]:
 
   return spotify_links
 
-def create_playlist_from_grouptext(playlist_name: str, group_name: str):
+def create_playlist_from_grouptext(playlist_name: str, group_name: str) -> Dict:
   """
   Creates a new spotify playlist, which will contain all songs shared in
   an iMessage group. This function will trigger a spotify authorization 
@@ -43,6 +40,10 @@ def create_playlist_from_grouptext(playlist_name: str, group_name: str):
 
   - playlist_name: the name of the playlist to be created
   - group_name: the display name of an iMessage group
+
+  Returns a dictionary representation of a spotify playlist object, which will 
+  contain serialized JSON data describing the created playlist (refer to the 
+  Spotify API Docs for details).
   """
   track_links = get_track_links_from_grouptext(group_name)
 
@@ -54,15 +55,14 @@ def create_playlist_from_grouptext(playlist_name: str, group_name: str):
   ))
 
   user_id = spotify_client.current_user()['id']
-
   playlist = spotify_client.user_playlist_create(user_id, playlist_name, public=False, collaborative=False)
-
   spotify_client.playlist_add_items(playlist['id'], items=track_links)
 
-if __name__ == '__main__':
-  parser = ArgumentParser(description='Get all text messages for a iMessage group chat')
-  parser.add_argument('--group', type=str)
-  parser.add_argument('--playlist', type=str)
-  args = parser.parse_args()
+  return spotify_client.playlist(playlist['id'])
 
-  create_playlist_from_grouptext(args.playlist, args.group)
+if __name__ == '__main__':
+  parser = ArgumentParser(description='Get links to every spotify track shared in an iMessage group chat')
+  parser.add_argument('group', type=str)
+  args = parser.parse_args()
+  for link in get_track_links_from_grouptext(args.group):
+    print(link)
