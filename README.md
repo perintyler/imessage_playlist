@@ -44,4 +44,7 @@ __NOTE:__ For local applications, use a redirect uri within the `localhost` doma
 
 For reference, use the `auth-template.env` enviroment file template, which is located in this repo's root directory.
 
+## Testing
+
+Tests were implemented using `pytest` and can be found in `tests.py`. I used my own local `chat.db` file for testing, and since I won't push my own iMessage database file to github, nobody else will be able to run the tests for now. If there's a need for it in the future, I can create a test `chat.db` with dummy data, which I would be able to push to github. 
 
