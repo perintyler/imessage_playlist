@@ -6,3 +6,4 @@ imessage_playlist.egg-info/
 build/
 dist/
 env/
+.env
