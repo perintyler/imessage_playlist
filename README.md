@@ -2,6 +2,12 @@
 
 This python package can be used to create a spotify playlist containing all songs shared in an iMessage group text.
 
+```bash
+% python3 -m imessage_playlist --group "My Group Chat" --playlist "My New Playlist"
+Curated 16 songs from "My Group Chat" and saved them to new playlist "My New Playlist"
+Link to playlist: https://open.spotify.com/playlist/2HyB1oMdu6iosGN3BXG8iS
+```
+
 ## Setup
 
 ### Installation
