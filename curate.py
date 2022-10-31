@@ -7,6 +7,7 @@ of track links.
 """
 
 import os
+from argparse import ArgumentParser
 
 from .grouptext import get_texts_for_group
 
@@ -46,3 +47,10 @@ def create_playlist_from_grouptext(playlist_name, group_name):
 
   spotify_client.playlist_add_items(playlist['id'], items=track_links)
 
+if __name__ == '__main__':
+  parser = ArgumentParser(description='Get all text messages for a iMessage group chat')
+  parser.add_argument('--group', type=str)
+  parser.add_argument('--playlist', type=str)
+  args = parser.parse_args()
+
+  print(create_playlist_from_grouptext(args.playlist, args.group))
