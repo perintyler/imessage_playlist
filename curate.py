@@ -49,7 +49,7 @@ def create_playlist_from_grouptext(playlist_name: str, group_name: str) -> Dict:
   contain serialized JSON data describing the created playlist (refer to the 
   Spotify API Docs for details).
   """
-  track_links = get_track_links_from_grouptext(group_name)
+  track_links = list(get_track_links_from_grouptext(group_name))
 
   spotify_client = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope='playlist-modify-private', 
