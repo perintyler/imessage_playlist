@@ -60,7 +60,13 @@ def create_playlist_from_grouptext(playlist_name: str, group_name: str) -> Dict:
 
   user_id = spotify_client.current_user()['id']
   playlist = spotify_client.user_playlist_create(user_id, playlist_name, public=False, collaborative=False)
-  spotify_client.playlist_add_items(playlist['id'], items=track_links)
+
+  # when there are more than 100 songs to add, the spotify API
+  # requests need to be divided into seperate chunks
+  for first_index_of_song_chunk in range(0, len(track_links), SPOTIFY_SONG_ADDING_THRESHOLD):
+    last_index_of_song_chunk = first_index_of_song_chunk + SPOTIFY_SONG_ADDING_THRESHOLD
+    chunk_of_songs = track_links[first_index_of_song_chunk:last_index_of_song_chunk]
+    spotify_client.playlist_add_items(playlist['id'], items=chunk_of_songs)
 
   return spotify_client.playlist(playlist['id'])
 
