@@ -15,6 +15,10 @@ from .grouptext import get_texts_for_group
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+# https://developer.spotify.com/documentation/web-api/reference/#/operations/add-tracks-to-playlist
+# The spotify API lets you add up to 100 songs to a playlist at a time 
+SPOTIFY_SONG_ADDING_THRESHOLD = 100 
+
 def get_track_links_from_grouptext(group_name: str) -> Set[str]:
   """
   Finds and returns all spotify track links that appear anywhere 
