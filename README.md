@@ -20,7 +20,7 @@ __Requirements:__
 The `imessage_playlist` package and all of its dependencies can be installed with pip. Run this command from within the root repo directory:
 
 ```bash
-pip3 install .
+pip3 install ./path/to/imessage_playlist
 ```
 
 ### Granting `chat.db` Permissions
