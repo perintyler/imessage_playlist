@@ -15,6 +15,10 @@ from .grouptext import get_texts_for_group
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+# https://developer.spotify.com/documentation/web-api/reference/#/operations/add-tracks-to-playlist
+# The spotify API lets you add up to 100 songs to a playlist at a time 
+SPOTIFY_SONG_ADDING_THRESHOLD = 100 
+
 def get_track_links_from_grouptext(group_name: str) -> Set[str]:
   """
   Finds and returns all spotify track links that appear anywhere 
@@ -45,7 +49,7 @@ def create_playlist_from_grouptext(playlist_name: str, group_name: str) -> Dict:
   contain serialized JSON data describing the created playlist (refer to the 
   Spotify API Docs for details).
   """
-  track_links = get_track_links_from_grouptext(group_name)
+  track_links = list(get_track_links_from_grouptext(group_name))
 
   spotify_client = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope='playlist-modify-private', 
@@ -56,7 +60,13 @@ def create_playlist_from_grouptext(playlist_name: str, group_name: str) -> Dict:
 
   user_id = spotify_client.current_user()['id']
   playlist = spotify_client.user_playlist_create(user_id, playlist_name, public=False, collaborative=False)
-  spotify_client.playlist_add_items(playlist['id'], items=track_links)
+
+  # when there are more than 100 songs to add, the spotify API
+  # requests need to be divided into seperate chunks
+  for first_index_of_song_chunk in range(0, len(track_links), SPOTIFY_SONG_ADDING_THRESHOLD):
+    last_index_of_song_chunk = first_index_of_song_chunk + SPOTIFY_SONG_ADDING_THRESHOLD
+    chunk_of_songs = track_links[first_index_of_song_chunk:last_index_of_song_chunk]
+    spotify_client.playlist_add_items(playlist['id'], items=chunk_of_songs)
 
   return spotify_client.playlist(playlist['id'])
 
